@@ -11,9 +11,15 @@ public class Event {
     private String eventName;
     private LocalDate eventDate;
     private String eventVenue;
-    ArrayList<String> eventAttendees = new ArrayList<>();
+    ArrayList<String> eventAttendees;
 
-    public Event(){}
+    public Event(String id, String name, LocalDate date, String venue, ArrayList<String> attendees){
+        eventID = id;
+        eventName = name;
+        eventDate = date;
+        eventVenue = venue;
+        eventAttendees = new ArrayList<>(attendees);
+    }
 
     public void setEventID(String id){
         eventID = id;
