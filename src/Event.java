@@ -1,5 +1,4 @@
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.*;
 
 public class Event {
@@ -11,7 +10,7 @@ public class Event {
     private String eventName;
     private LocalDate eventDate;
     private String eventVenue;
-    ArrayList<String> eventAttendees = new ArrayList<>();
+    ArrayList<Attendee> eventAttendees = new ArrayList<>();
 
     public Event(){}
 
@@ -56,14 +55,14 @@ public class Event {
                 setEventID(id);
 
                 System.out.println("Enter the name of the Event: ");
-                String name = reader.nextLine();
-                setEventName(name);
+                String eventName = reader.nextLine();
+                setEventName(eventName);
 
                 System.out.println("Enter the Event date (YYYY-MM-DD): ");
                 LocalDate date = LocalDate.parse(reader.nextLine());
                 setEventDate(date);
 
-                System.out.println("Enter the date venue: ");
+                System.out.println("Enter the event's venue: ");
                 String venue = reader.nextLine();   
                 setEventVenue(venue);
             case 2:
@@ -73,33 +72,72 @@ public class Event {
 
                 for(int i=0; i<num; i++){
                     System.out.println("Enter the name of the attendee: ");
-                    String attendee = reader.nextLine();
-                    eventAttendees.add(attendee);
-                    System.out.println("\n" + attendee + " added successfully to the list of attendees");
+                    String attendeeName = reader.nextLine();
+                    System.out.println("Enter the gender of the attendee: ");
+                    char attendeeGender = reader.nextLine().charAt(0);
+                    System.out.println("Enter the email of the attendee: ");
+                    String attendeeEmail = reader.nextLine();
+                    System.out.println("Enter the age of the attendee: ");
+                    int attendeeAge = reader.nextInt();
+                    reader.nextLine();
+
+                    //String attendeeDetail = "Attendee Name: " + attendeeName + "\n" + "Attendee Gender: " + attendeeGender + "\n" + "Attendee Email: " + attendeeEmail + "\n" + "Attendee Age: " + attendeeAge + "\n";
+
+                    eventAttendees.add(new Attendee(attendeeName, attendeeGender, attendeeEmail, attendeeAge));
+                    System.out.println("\n" + attendeeName + " added successfully to the list of attendees");
                 }
                 break;
             case 3:
                 System.out.println("Enter the name of the attendee to remove:");
                 String nameToRemove = reader.nextLine();
-                eventAttendees.remove(nameToRemove);
+                eventAttendees.removeIf(attendee -> attendee.getName().equals(nameToRemove));
                 System.out.println("\n" + nameToRemove + " removed successfully from the list of attendees");
                 break;
             case 4:
-                System.out.println("Enter the name of the attendee to update:");
+
+                System.out.println("Enter the position of the attendee you want to update:");
+                int position = reader.nextInt();
+                reader.nextLine(); 
+
+                if (position >= 0 && position < eventAttendees.size()) {
+                    System.out.println("Enter the new name for the attendee:");
+                    String newName = reader.nextLine();
+                    
+                    Attendee attendeeToUpdate = eventAttendees.get(position);
+                    attendeeToUpdate.setName(newName);
+                    
+                    System.out.println("Attendee at position " + position + " updated successfully to " + newName);
+                } else {
+                    System.out.println("Invalid position. No update performed.");
+                }
+                break;
+          /*       System.out.println("Enter the name of the attendee to update:");
                 String nameToUpdate = reader.nextLine();
                 System.out.println("Enter the position where you want to update:");
                 int index = reader.nextInt();
                 reader.nextLine();
                 System.out.println("\n" + nameToUpdate + " updated successfully at the " + index + " position");
-                break;
+                break; */
             case 5:
                 System.out.println("Enter the name of the attendee to find:");
                 String nameToFind = reader.nextLine();
-                if(eventAttendees.contains(nameToFind)){
-                    System.out.println("\n" + nameToFind + " found in the list of attendees");
-                }else{
-                    System.out.println("\n" + nameToFind + " not found in the list of attendees");
+                boolean found = false;
+                for(Attendee attendee : eventAttendees){
+                    System.out.println(attendee);
+                    if(attendee.getName().equals(nameToFind)){
+                        System.out.println(attendee);
+                        found = true;
+                        break;
+                    } 
                 }
+                if(found){
+
+                    System.out.println("\n" + nameToFind + " found in the list of attendees");
+                }
+                else{
+                    System.out.println("\n" + nameToFind + " not found in the list of attendees");
+                    break;
+                } 
                 break;
             case 6: 
                 System.out.println("Here is the list of attendees:" + "\n" + eventAttendees);
