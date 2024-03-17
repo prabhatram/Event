@@ -4,7 +4,10 @@ import java.util.*;
 public class Event {
 
     Scanner reader = new Scanner(System.in);
-    public final static int capacity = 10_000;
+    public final static int capacity = 200;
+
+    
+    HashMap<String, Attendee> seatDetails = new HashMap<>(capacity, 0.6f);
 
     private String eventID;
     private String eventName;
@@ -46,6 +49,15 @@ public class Event {
         return eventVenue;
     }
 
+    public void setSeatingDetails(String seat, Attendee attendee){
+        seatDetails.put(seat, attendee);
+    }
+
+    public void getSeatingDetails(String seat){
+        System.out.println("The details for the seat " + seat + " are as follows: " + "\n" + seatDetails.get(seat));
+    }
+    
+
     public void organizeEvent(int choice){
 
         switch(choice){
@@ -68,9 +80,33 @@ public class Event {
             case 2:
                 System.out.println("How many attendees are coming?: ");
                 int num = reader.nextInt();
-                reader.nextLine();   
-
+                reader.nextLine();
+                
                 for(int i=0; i<num; i++){
+                    System.out.println("Enter the name of the attendee: ");
+                    String name = reader.nextLine();
+
+                    System.out.println("Enter the gender of the attendee: ");
+                    char gender = reader.nextLine().charAt(0);
+
+                    System.out.println("Enter the age of the attendee: ");
+                    int age = reader.nextInt();
+                    reader.nextLine();
+
+                    System.out.println("Enter the email of the attendee: ");
+                    String email = reader.nextLine();
+
+                    System.out.println("Enter the seat number for the attendee: ");
+                    String seat = reader.nextLine();
+ 
+                    eventAttendees.add(new Attendee(name, gender, email, age, seat));
+                    setSeatingDetails(seat, (new Attendee(name, gender, email, age, seat)));
+
+                }
+                
+                System.out.println("\n"+"All the attendees were added successfully to the list of attendees");
+
+                /* for(int i=0; i<num; i++){
                     System.out.println("Enter the name of the attendee: ");
                     String attendeeName = reader.nextLine();
                     System.out.println("Enter the gender of the attendee: ");
@@ -85,17 +121,60 @@ public class Event {
 
                     eventAttendees.add(new Attendee(attendeeName, attendeeGender, attendeeEmail, attendeeAge));
                     System.out.println("\n" + attendeeName + " added successfully to the list of attendees");
-                }
+ */                //}
                 break;
             case 3:
                 System.out.println("Enter the name of the attendee to remove:");
                 String nameToRemove = reader.nextLine();
-                eventAttendees.removeIf(attendee -> attendee.getName().equals(nameToRemove));
+
+                for(Attendee attendee : eventAttendees){
+                    if(nameToRemove.equals(attendee.getName())){
+                        eventAttendees.remove(attendee);
+                        break;
+                    }
+                }
+
+                //eventAttendees.removeIf(attendee -> attendee.getName().equals(nameToRemove));
                 System.out.println("\n" + nameToRemove + " removed successfully from the list of attendees");
                 break;
             case 4:
 
-                System.out.println("Enter the position of the attendee you want to update:");
+                System.out.println("Enter the name of the attendee you want to update:");
+                String nameToUpdate = reader.nextLine();
+
+                for(Attendee attendee : eventAttendees){
+                    if(nameToUpdate.equals(attendee.getName())){
+                        System.out.println("Enter the new name, or enter null if you don't want to update :");
+                        String newName = reader.nextLine();
+                        if(!newName.equals("null")){
+                            attendee.setName(newName);
+                        }
+
+                        System.out.println("Enter the new age, or enter 0 if you don't want to update :");
+                        int newAge = reader.nextInt();
+                        reader.nextLine();
+                        if(newAge != 0){
+                            attendee.setAge(newAge);
+                        }
+
+                        System.out.println("Enter the new email, or enter null if you don't want to update :");
+                        String newEmail = reader.nextLine();
+                        
+                        if(!newEmail.equals("null")){
+                            attendee.setEmail(newEmail);
+                        }
+
+                        System.out.println("Enter the new gender, or enter null if you don't want to update :");
+                        String newGender = reader.nextLine(); // "F", "null"
+                        
+                        if(!newGender.equals("null")){
+                            attendee.setGender(newGender.charAt(0)); // "F" -> 'F'
+                        }
+                        break;
+                    }
+                }
+
+                //System.out.println("Enter the position of the attendee you want to update:");
                 int position = reader.nextInt();
                 reader.nextLine(); 
 
@@ -121,28 +200,42 @@ public class Event {
             case 5:
                 System.out.println("Enter the name of the attendee to find:");
                 String nameToFind = reader.nextLine();
-                boolean found = false;
+//                boolean found = false;
                 for(Attendee attendee : eventAttendees){
-                    System.out.println(attendee);
+                    //System.out.println(attendee);
                     if(attendee.getName().equals(nameToFind)){
                         System.out.println(attendee);
-                        found = true;
+                        System.out.println("\n" + nameToFind + " found in the list of attendees");
+                        //found = true;
                         break;
                     } 
                 }
-                if(found){
+                /* if(found){
 
                     System.out.println("\n" + nameToFind + " found in the list of attendees");
                 }
                 else{
                     System.out.println("\n" + nameToFind + " not found in the list of attendees");
                     break;
-                } 
+                }  */
                 break;
             case 6: 
                 System.out.println("Here is the list of attendees:" + "\n" + eventAttendees);
                 break;     
             case 7: 
+                ComplementaryPassOperation compPass = new ComplementaryPassOperation();
+                compPass.complementaryPassOperations();
+                break;
+            case 8:
+                HandlePerformances performance = new HandlePerformances();
+                performance.performanceOperations();
+                break;
+            case 9:
+                System.out.println("Enter the seat number to find its details: ");
+                String seat = reader.nextLine();
+                getSeatingDetails(seat);
+                break;
+            case 10: 
                 break;
             default:
                 System.out.println("Invalid choice");
