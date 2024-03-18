@@ -43,7 +43,7 @@ public class ComplementaryPassOperation {
     }
 
     public void redeemComplementaryPassess(int numOfPasses){
-        if(compPassess.size() == 10){
+        if(compPassess.size() >= 10){
             System.out.println("\n" + "Invalid operation. All the complementary passes have already been redeemed.");
             System.out.println("\n" + "Would you like to see the list of redeemed complementary passes? (Y/N)");
             char choice = reader.nextLine().charAt(0);
@@ -54,7 +54,9 @@ public class ComplementaryPassOperation {
         }
         else{
 
-            while(numOfPasses <=10){
+            int i=0;
+
+            do{
                 System.out.println("Enter the Complementary Pass ID: ");
                 String ID = reader.nextLine();
 
@@ -63,8 +65,8 @@ public class ComplementaryPassOperation {
 
                 ComplementaryPasses pass = new ComplementaryPasses(ID, accessLevel);
                 compPassess.push(pass);
-                numOfPasses++;
-            }
+                i++;
+            }while(i<numOfPasses);
             
         }
     }

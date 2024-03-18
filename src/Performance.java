@@ -3,13 +3,13 @@ public class Performance {
     private String performanceID;
     private String performanceName;
     private String performanceLeadName;
-    private int performanceRank;
+    private char performanceGroup;
 
-    public Performance(String performanceID, String performanceName, String performanceLeadName, int performanceRank){
+    public Performance(String performanceID, String performanceName, String performanceLeadName, char performanceGroup){
         this.performanceID = performanceID;
         this.performanceName = performanceName;
         this.performanceLeadName = performanceLeadName;
-        this.performanceRank = performanceRank;
+        this.performanceGroup = performanceGroup;
     }
 
     public void setPerformanceID(String performanceID){
@@ -36,16 +36,16 @@ public class Performance {
         return performanceLeadName;
     }
 
-    public void setPerformanceRank(int performanceRank){
-        this.performanceRank = performanceRank;
+    public void setPerformanceGroup(char performanceGroup){
+        this.performanceGroup = performanceGroup;
     }
 
-    public int getPerformanceRank(){
-        return performanceRank;
+    public int getPerformanceGroup(){
+        return performanceGroup;
     }
 
     public String toString() {
-        return "Performance{PerformanceID='" + performanceID + "', PerformanceName='" + performanceName + "', PerformanceLeadName='" + performanceLeadName + "', PerformanceRank='" + performanceRank + "'}";
+        return "Performance{PerformanceID='" + performanceID + "', PerformanceName='" + performanceName + "', PerformanceLeadName='" + performanceLeadName + "', PerformanceRank='" + performanceGroup + "'}";
     }
 
 

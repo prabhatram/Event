@@ -1,11 +1,14 @@
-import java.util.PriorityQueue;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
 
 public class HandlePerformances {
 
     Scanner reader = new Scanner(System.in);
 
-    PriorityQueue<Performance> performances = new PriorityQueue<>();
+    Queue<Performance> performances = new LinkedList<>();
+
+    //Queue<Performance> performances = new LinkedList<>();
 
     
     public void performanceOperations(){
@@ -53,10 +56,10 @@ public class HandlePerformances {
             String performanceLeadName = reader.nextLine();
 
             System.out.println("Enter the rank of the performance: ");
-            int performanceRank = reader.nextInt();
-            reader.nextLine();
+            char performanceGroup = reader.nextLine().charAt(0);
+            
 
-            Performance performance = new Performance(performanceID, performanceName, performanceLeadName, performanceRank);
+            Performance performance = new Performance(performanceID, performanceName, performanceLeadName, performanceGroup);
 
             this.performances.offer(performance);
         }
@@ -68,7 +71,7 @@ public class HandlePerformances {
     }
 
     public void startPerformances(){
-        System.out.println("The performance that is going to start is: " + performances.poll());
+        System.out.println("The next performance starting is: " + performances.poll());
     }
-    
+        
 }

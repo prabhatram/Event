@@ -57,6 +57,9 @@ public class Attendee {
 
     @Override
     public String toString() {
-        return "Attendee{Name='" + name + "', Email='" + email + "'}";
+        return "\n" + "Attendee Name:" +  name +  
+        "\n" + "Email:" + email + 
+        "\n" + "Age: " + age + 
+        "\n" + "Seat No.: " + seatNo;
     }
 }
